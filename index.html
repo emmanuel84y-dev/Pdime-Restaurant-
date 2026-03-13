@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pdime Restaurant — The Home of Authentic African Soups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ===== CSS VARIABLES ===== */
+  :root {
+    --green: #1F6F43;
+    --green-dark: #164d2f;
+    --green-light: #2a8a54;
+    --gold: #D4A017;
+    --gold-light: #e8b82a;
+    --cream: #F9F6EF;
+    --cream-dark: #f0ebe0;
+    --charcoal: #333333;
+    --charcoal-light: #555555;
+    --white: #ffffff;
+    --shadow: 0 20px 60px rgba(31,111,67,0.15);
+    --shadow-gold: 0 10px 40px rgba(212,160,23,0.2);
+  }
+
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  img { display: block; width: 100%; max-width: 100%; }
+  a { text-decoration: none; color: inherit; }
+  section { overflow-x: hidden; }
+
+  /* ===== SCROLL ANIMATIONS ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  nav.scrolled {
+    background: rgba(31,111,67,0.97);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+  }
+
+  .nav-logo {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .nav-logo-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+  .nav-logo-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    align-items: center;
+  }
+  .nav-links a {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--charcoal) !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2px;
+    font-weight: 600 !important;
+    transition: background 0.2s, transform 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; transform: translateY(-1px); }
+  .nav-cta::after { display: none !important; }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 5px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: white; border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 650px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      linear-gradient(135deg, rgba(31,111,67,0.85) 0%, rgba(22,77,47,0.75) 40%, rgba(0,0,0,0.5) 100%),
+      url('https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=1600&q=80') center/cover no-repeat;
+    transform: scale(1.05);
+    animation: heroZoom 12s ease-out forwards;
+  }
+  @keyframes heroZoom {
+    from { transform: scale(1.08); }
+    to { transform: scale(1); }
+  }
+
+  /* Decorative leaf pattern overlay */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(212,160,23,0.08) 0%, transparent 60%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 5%;
+    max-width: 820px;
+    animation: heroFade 1.2s ease-out 0.3s both;
+  }
+  @keyframes heroFade {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(212,160,23,0.2);
+    border: 1px solid rgba(212,160,23,0.5);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-badge span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .hero-badge-dot {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    color: rgba(255,255,255,0.85);
+    font-style: italic;
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--charcoal);
+    padding: 1rem 2.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+    box-shadow: 0 4px 20px rgba(212,160,23,0.4);
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(212,160,23,0.5);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 1rem 2.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1.5px solid rgba(255,255,255,0.6);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .btn-outline:hover {
+    border-color: var(--white);
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+  }
+
+  .whatsapp-icon {
+    width: 18px; height: 18px;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+  .hero-scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
+  }
+
+  /* ===== SECTION COMMONS ===== */
+  section { position: relative; }
+
+  .section-label {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    color: var(--green);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-left: 2rem;
+  }
+  .section-label::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    width: 1.4rem; height: 1px;
+    background: var(--green);
+    transform: translateY(-50%);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    color: var(--charcoal);
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+  }
+
+  /* ===== ABOUT SECTION ===== */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+    align-items: stretch;
+    overflow: hidden;
+  }
+
+  .about-image {
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+  }
+  .about-image img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+  .about-image:hover img { transform: scale(1.04); }
+
+  .about-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(31,111,67,0.3) 0%, transparent 60%);
+  }
+
+  .about-badge {
+    position: absolute;
+    bottom: 2.5rem;
+    right: -1px;
+    background: var(--gold);
+    color: var(--charcoal);
+    padding: 1.2rem 1.8rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    box-shadow: -8px 8px 30px rgba(0,0,0,0.2);
+  }
+
+  .about-content {
+    background: var(--white);
+    padding: 4rem 6%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .about-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    line-height: 1.85;
+    color: var(--charcoal-light);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-highlights {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .about-highlight {
+    text-align: center;
+    flex: 1;
+  }
+  .about-highlight-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--green);
+    display: block;
+  }
+  .about-highlight-label {
+    font-size: 0.8rem;
+    color: var(--charcoal-light);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  /* ===== SEPARATOR ===== */
+  .sep {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2rem 5%;
+    background: var(--green);
+  }
+  .sep-line { flex: 1; height: 1px; background: rgba(255,255,255,0.2); }
+  .sep-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: normal;
+    text-align: center;
+  }
+  .sep-ornament { color: var(--gold); font-size: 1.2rem; }
+
+  /* ===== SIGNATURE DISH ===== */
+  .signature {
+    background: var(--charcoal);
+    position: relative;
+    overflow: hidden;
+  }
+  .signature-bg {
+    position: absolute;
+    inset: 0;
+    background: url('https://images.unsplash.com/photo-1567521464027-f127ff144326?w=1400&q=80') center/cover;
+    opacity: 0.18;
+  }
+  .signature-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    min-height: 600px;
+    overflow: hidden;
+  }
+  .signature-content {
+    padding: 6rem 6%;
+    min-width: 0;
+  }
+  .signature .section-label { color: var(--gold); }
+  .signature .section-label::before { background: var(--gold); }
+  .signature .section-title { color: var(--white); }
+
+  .signature-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.9;
+    margin-bottom: 2.5rem;
+    font-style: italic;
+  }
+
+  .signature-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2.5rem;
+  }
+  .signature-tag {
+    border: 1px solid rgba(212,160,23,0.5);
+    color: var(--gold);
+    padding: 0.4rem 0.9rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  .signature-image {
+    position: relative;
+    height: 600px;
+    overflow: hidden;
+  }
+  .signature-image img {
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9) saturate(1.2);
+    transition: transform 0.8s ease;
+  }
+  .signature-image:hover img { transform: scale(1.05); }
+  .signature-image::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 80px;
+    background: linear-gradient(to right, var(--charcoal), transparent);
+    z-index: 1;
+  }
+
+  /* ===== MENU SECTION ===== */
+  .menu-section {
+    padding: 6rem 5%;
+    background: var(--cream);
+  }
+  .menu-header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 4rem;
+  }
+  .menu-header .section-label { padding-left: 0; }
+  .menu-header .section-label::before { display: none; }
+  .menu-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    color: var(--charcoal-light);
+    font-style: italic;
+    line-height: 1.8;
+    margin-top: 1rem;
+  }
+
+  .menu-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+  .menu-tab {
+    padding: 0.6rem 1.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1.5px solid var(--green);
+    color: var(--green);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.25s;
+    background: transparent;
+  }
+  .menu-tab.active, .menu-tab:hover {
+    background: var(--green);
+    color: var(--white);
+  }
+
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .menu-card {
+    background: var(--white);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    min-width: 0;
+  }
+  .menu-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(31,111,67,0.15);
+  }
+  .menu-card-img {
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+  }
+  .menu-card-img img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .menu-card:hover .menu-card-img img { transform: scale(1.08); }
+  .menu-card-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(31,111,67,0.4) 0%, transparent 60%);
+  }
+
+  .menu-card-body {
+    padding: 1.3rem 1.5rem 1.5rem;
+  }
+  .menu-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .menu-card-dot {
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .menu-card-desc {
+    font-size: 0.85rem;
+    color: var(--charcoal-light);
+    line-height: 1.6;
+  }
+  .menu-card-tag {
+    display: inline-block;
+    margin-top: 0.8rem;
+    font-size: 0.72rem;
+    color: var(--green);
+    background: rgba(31,111,67,0.08);
+    padding: 0.2rem 0.6rem;
+    border-radius: 50px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* swallow grid */
+  .swallow-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  .swallow-card {
+    background: var(--white);
+    border: 2px solid transparent;
+    border-radius: 4px;
+    padding: 1.8rem 2rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-width: 130px;
+    flex: 1 1 130px;
+    max-width: 200px;
+  }
+  .swallow-card:hover {
+    border-color: var(--green);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+  }
+  .swallow-icon {
+    width: 44px; height: 44px;
+    margin: 0 auto 0.9rem;
+    color: var(--green);
+  }
+  .swallow-icon svg {
+    width: 100%; height: 100%;
+  }
+  .swallow-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--charcoal);
+  }
+
+  .swallow-note {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--charcoal-light);
+    font-style: italic;
+    margin-top: 2rem;
+  }
+
+  /* ===== GALLERY SECTION ===== */
+  .gallery-section {
+    padding: 6rem 5%;
+    background: var(--white);
+  }
+  .gallery-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+  .gallery-header .section-label { padding-left: 0; }
+  .gallery-header .section-label::before { display: none; }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 280px 280px;
+    gap: 1rem;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 100%;
+  }
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .gallery-item:first-child {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease, filter 0.4s ease;
+  }
+  .gallery-item:hover img {
+    transform: scale(1.07);
+    filter: brightness(0.85) saturate(1.1);
+  }
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(31,111,67,0.7) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.5rem;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-caption {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--white);
+    font-style: italic;
+  }
+
+  /* ===== ORDER SECTION ===== */
+  .order-section {
+    background: var(--green);
+    padding: 7rem 5%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .order-section::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(212,160,23,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .order-section::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(212,160,23,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .order-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+  .order-section .section-label { color: var(--gold); }
+  .order-section .section-label::before { background: var(--gold); }
+  .order-section .section-title { color: var(--white); margin-bottom: 1.2rem; }
+
+  .order-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.8);
+    font-style: italic;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: #25D366;
+    color: white;
+    padding: 1.1rem 2.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 30px rgba(37,211,102,0.4);
+  }
+  .btn-whatsapp:hover {
+    background: #20be5a;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(37,211,102,0.5);
+  }
+  .btn-whatsapp svg { width: 22px; height: 22px; }
+
+  .order-note {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== LOCATION SECTION ===== */
+  .location-section {
+    padding: 6rem 5%;
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 4rem;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .location-info { }
+  .location-details { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .location-detail {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .location-icon {
+    width: 44px; height: 44px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: white;
+    font-size: 1.1rem;
+  }
+  .location-detail-text h4 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--green);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+  .location-detail-text p {
+    font-size: 0.95rem;
+    color: var(--charcoal-light);
+    line-height: 1.7;
+  }
+
+  .map-container {
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    height: 420px;
+    background: #e5e0d8;
+    position: relative;
+  }
+  .map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  .map-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e8e0d0 0%, #d5cbb8 100%);
+    color: var(--charcoal-light);
+    gap: 1rem;
+  }
+  .map-placeholder-icon { margin-bottom: 0.5rem; }
+  .map-placeholder-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    text-align: center;
+    max-width: 250px;
+    line-height: 1.6;
+  }
+  .map-placeholder-pin {
+    background: var(--green);
+    color: white;
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #111;
+    color: rgba(255,255,255,0.7);
+    padding: 5rem 5% 2rem;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .footer-brand { }
+  .footer-brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+  .footer-brand-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .footer-brand-desc {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1.5rem;
+  }
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 1rem;
+  }
+
+  .footer-col h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    color: var(--white);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-links a {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.55);
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  .social-links {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+  .social-link {
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .social-link:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--charcoal);
+    transform: translateY(-2px);
+  }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.3);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-bottom-right {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .footer-bottom-right span { color: var(--gold); }
+
+  /* ===== MOBILE NAV ===== */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 80px; left: 0; right: 0;
+    background: rgba(31,111,67,0.98);
+    backdrop-filter: blur(10px);
+    padding: 2rem 5%;
+    z-index: 999;
+    flex-direction: column;
+    gap: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+  .mobile-nav.open {
+    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .mobile-nav a {
+    color: rgba(255,255,255,0.85);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .mobile-nav a:last-child { border-bottom: none; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1100px) {
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .location-section { gap: 3rem; }
+  }
+
+  @media (max-width: 900px) {
+    .about { grid-template-columns: 1fr; }
+    .about-image { height: 350px; min-height: unset; }
+    .about-content { padding: 3.5rem 6%; }
+    .signature-inner { grid-template-columns: 1fr; }
+    .signature-image { display: none; }
+    .signature-content { padding: 4rem 6%; }
+    .location-section { grid-template-columns: 1fr; gap: 3rem; }
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 220px 220px 220px;
+    }
+    .gallery-item:first-child { grid-column: 1 / 3; grid-row: 1; height: 220px; }
+    .sep { flex-wrap: wrap; gap: 0.8rem; }
+    .sep-line { flex: 0 0 100%; }
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .nav-logo-tag { display: none; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-btns { flex-direction: column; align-items: flex-start; }
+    .hero h1 { font-size: 2rem; }
+    .hero-sub { font-size: 1.1rem; }
+    .gallery-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+    }
+    .gallery-item { height: 220px; }
+    .gallery-item:first-child { grid-column: 1; grid-row: auto; height: 260px; }
+    .about-highlights { flex-direction: column; gap: 1.5rem; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .swallow-grid { gap: 0.8rem; }
+    .swallow-card { padding: 1.4rem 1.2rem; min-width: 110px; }
+    .order-section { padding: 5rem 5%; }
+    .btn-whatsapp { padding: 1rem 1.6rem; font-size: 0.9rem; }
+    .section-title { font-size: clamp(1.6rem, 5vw, 2.5rem); }
+    .menu-grid { grid-template-columns: 1fr; }
+    .hero-btns .btn-outline,
+    .hero-btns .btn-primary { width: 100%; justify-content: center; text-align: center; }
+    .sticky-order { bottom: 1rem; right: 1rem; padding: 0.7rem 1.1rem; font-size: 0.8rem; }
+  }
+
+  @media (max-width: 400px) {
+    .about-highlights { flex-direction: row; flex-wrap: wrap; }
+    .about-highlight { flex: 1 1 40%; }
+    .swallow-card { min-width: 90px; flex: 1 1 90px; }
+  }
+
+  /* ===== STICKY ORDER BTN ===== */
+  .sticky-order {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #25D366;
+    color: white;
+    padding: 0.8rem 1.4rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 0 8px 30px rgba(37,211,102,0.45);
+    cursor: pointer;
+    transition: all 0.3s;
+    animation: floatBtn 3s ease-in-out infinite;
+  }
+  .sticky-order:hover { transform: translateY(-3px) scale(1.04); }
+  @keyframes floatBtn {
+    0%,100% { box-shadow: 0 8px 30px rgba(37,211,102,0.45); }
+    50% { box-shadow: 0 12px 40px rgba(37,211,102,0.6); }
+  }
+  .sticky-order svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">
+    <span class="nav-logo-name">Pdime Restaurant</span>
+    <span class="nav-logo-tag">The Home of Authentic African Soups</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact" class="nav-cta">Chat with Us</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMobileNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#home" onclick="closeMobileNav()">Home</a>
+  <a href="#about" onclick="closeMobileNav()">About</a>
+  <a href="#menu" onclick="closeMobileNav()">Menu</a>
+  <a href="#gallery" onclick="closeMobileNav()">Gallery</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+  <a href="https://wa.me/2349071143369?text=Hello%20Pdime%20Restaurant%2C%20I%20would%20like%20to%20chat%20with%20you." onclick="closeMobileNav()" style="color: var(--gold)">Chat with Us on WhatsApp</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span>Now Open for Dine-In</span>
+    </div>
+    <h1>Pdime Restaurant —<br/><em>The Home of Authentic</em><br/>African Soups</h1>
+    <p class="hero-sub">Authentic Swallow. Legendary Soups.</p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary">View Our Menu</a>
+      <a href="https://wa.me/2349071143369?text=Hello%20Pdime%20Restaurant%2C%20I%20would%20like%20to%20chat%20with%20you." class="btn-outline" target="_blank">
+        <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        Chat with Us on WhatsApp
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ===== ABOUT SECTION ===== -->
+<section class="about" id="about">
+  <div class="about-image reveal-left">
+    <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=800&q=80" alt="African soup preparation" loading="lazy" />
+    <div class="about-image-overlay"></div>
+    <div class="about-badge">Fresh & Traditional</div>
+  </div>
+  <div class="about-content reveal-right">
+    <span class="section-label">Our Story</span>
+    <h2 class="section-title">Where Tradition<br/><em style="font-style:italic; color:var(--green);">Meets Flavor</em></h2>
+    <p class="about-text">
+      Pdime Restaurant celebrates the rich heritage of African soups and swallow. Our dishes are prepared using traditional recipes, fresh ingredients, and carefully selected spices to deliver rich, satisfying flavors that feel like home.
+    </p>
+    <p class="about-text">
+      Whether you love Egusi, Afang, Ogbono, or Okra, every bowl is crafted to bring you the authentic taste of African cuisine — warm, nourishing, and unforgettable.
+    </p>
+    <div class="about-highlights">
+      <div class="about-highlight">
+        <span class="about-highlight-num">11+</span>
+        <div class="about-highlight-label">Signature Soups</div>
+      </div>
+      <div class="about-highlight">
+        <span class="about-highlight-num">100%</span>
+        <div class="about-highlight-label">Fresh Ingredients</div>
+      </div>
+      <div class="about-highlight">
+        <span class="about-highlight-num">5★</span>
+        <div class="about-highlight-label">Customer Love</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEPARATOR ===== -->
+<div class="sep">
+  <div class="sep-line"></div>
+  <span class="sep-ornament">✦</span>
+  <span class="sep-text">Crafted with Heritage & Heart</span>
+  <span class="sep-ornament">✦</span>
+  <div class="sep-line"></div>
+</div>
+
+<!-- ===== SIGNATURE DISH ===== -->
+<section class="signature" id="signature">
+  <div class="signature-bg"></div>
+  <div class="signature-inner">
+    <div class="signature-content reveal">
+      <span class="section-label">Our Pride</span>
+      <h2 class="section-title">The Pdime<br/><em style="font-style:italic; color:var(--gold)">Special</em></h2>
+      <p class="signature-desc">
+        A rich combination of Egusi and Ogbono soups served with premium assorted meats, stockfish, and dry fish, paired perfectly with your choice of swallow. A true taste of Africa and one of our most loved dishes.
+      </p>
+      <div class="signature-tags">
+        <span class="signature-tag">Egusi & Ogbono</span>
+        <span class="signature-tag">Assorted Meats</span>
+        <span class="signature-tag">Stockfish</span>
+        <span class="signature-tag">Dry Fish</span>
+        <span class="signature-tag">Choice of Swallow</span>
+      </div>
+      <a href="https://wa.me/2349071143369?text=Hello%20Pdime%20Restaurant%2C%20I%20would%20like%20to%20know%20more%20about%20the%20Pdime%20Special." target="_blank" class="btn-primary" style="display:inline-block; text-align:center;">Ask Us About This Dish</a>
+    </div>
+    <div class="signature-image reveal-right">
+      <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=800&q=80" alt="Pdime Special dish" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<!-- ===== MENU SECTION ===== -->
+<section class="menu-section" id="menu">
+  <div class="menu-header reveal">
+    <span class="section-label">Our Offerings</span>
+    <h2 class="section-title">Our Legendary Soups</h2>
+    <p class="menu-intro">Our soups are prepared fresh with traditional recipes and premium ingredients to deliver authentic African flavor.</p>
+  </div>
+
+  <div class="menu-tabs reveal">
+    <button class="menu-tab active" onclick="switchTab('soups', this)">Soups</button>
+    <button class="menu-tab" onclick="switchTab('swallow', this)">Swallows</button>
+  </div>
+
+  <div class="menu-panel active" id="tab-soups">
+    <div class="menu-grid">
+
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80" alt="Egusi Soup" loading="lazy" />
+          <div class="menu-card-img-overlay"></div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Rich Egusi Soup <span class="menu-card-dot"></span></div>
+          <p class="menu-card-desc">Ground melon seeds slow-cooked in a rich palm oil base with assorted meats, fish, and seasonal vegetables.</p>
+          <span class="menu-card-tag">Most Popular</span>
+        </div>
+      </div>
+
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=600&q=80" alt="Ogbono Soup" loading="lazy" />
+          <div class="menu-card-img-overlay"></div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Traditional Ogbono Soup <span class="menu-card-dot"></span></div>
+          <p class="menu-card-desc">Wild mango seeds with a naturally thick, draw consistency, cooked with assorted meats and smoked fish.</p>
+          <span class="menu-card-tag">Customer Favourite</span>
+        </div>
+      </div>
+
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&q=80" alt="Okra Soup" loading="lazy" />
+          <div class="menu-card-img-overlay"></div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Fresh Okra Soup <span class="menu-card-dot"></span></div>
+          <p class="menu-card-desc">Freshly sliced okra in a light, flavorful broth with choice proteins, and a silky, satisfying draw.</p>
+          <span class="menu-card-tag">Light & Fresh</span>
+        </div>
+      </div>
+
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&q=80" alt="Afang Soup" loading="lazy" />
+          <div class="menu-card-img-overlay"></div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Authentic Afang Soup <span class="menu-card-dot"></span></div>
+          <p class="menu-card-desc">A prized Cross River delicacy made with Afang leaves, water leaves, and an abundance of assorted seafood and meats.</p>
+          <span class="menu-card-tag">Premium</span>
+        </div>
+      </div>
+
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80" alt="Bitterleaf Soup" loading="lazy" />
+          <div class="menu-card-img-overlay"></div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Classic Bitterleaf Soup <span class="menu-card-dot"></span></div>
+          <p class="menu-card-desc">Rich and hearty Igbo-style bitter leaf soup with cocoyam thickener, palm oil, and assorted meats.</p>
+          <span class="menu-card-tag">Traditional</span>
+        </div>
+      </div>
+
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=600&q=80" alt="Seafood Okra" loading="lazy" />
+          <div class="menu-card-img-overlay"></div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Seafood Okra Soup <span class="menu-card-dot"></span></div>
+          <p class="menu-card-desc">Luscious okra loaded with crab, shrimp, periwinkle, and fish — a coastal feast in every bowl.</p>
+          <span class="menu-card-tag">Seafood Special</span>
+        </div>
+      </div>
+
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=600&q=80" alt="White Soup" loading="lazy" />
+          <div class="menu-card-img-overlay"></div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Native White Soup (Ofe Nsala) <span class="menu-card-dot"></span></div>
+          <p class="menu-card-desc">A delicate, peppery broth thickened with yam, featuring goat meat or catfish with fragrant utazi leaves.</p>
+          <span class="menu-card-tag">Anambra Classic</span>
+        </div>
+      </div>
+
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&q=80" alt="Fisherman Soup" loading="lazy" />
+          <div class="menu-card-img-overlay"></div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Spicy Fisherman Soup <span class="menu-card-dot"></span></div>
+          <p class="menu-card-desc">A fiery, aromatic Delta-style soup bursting with fresh fish, spicy scotch bonnet, and bold earthy spices.</p>
+          <span class="menu-card-tag">Spicy</span>
+        </div>
+      </div>
+
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80" alt="Oha Soup" loading="lazy" />
+          <div class="menu-card-img-overlay"></div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Oha Soup <span class="menu-card-dot"></span></div>
+          <p class="menu-card-desc">Tender Oha leaves simmered in a thick cocoyam broth with assorted meats and crayfish. Subtly aromatic.</p>
+          <span class="menu-card-tag">Seasonal Leaves</span>
+        </div>
+      </div>
+
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&q=80" alt="Banga Soup" loading="lazy" />
+          <div class="menu-card-img-overlay"></div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Banga Soup <span class="menu-card-dot"></span></div>
+          <p class="menu-card-desc">Fresh palm nut extract simmered with fragrant spices, dried fish, and assorted meats. Rich, deep, and soul-warming.</p>
+          <span class="menu-card-tag">Delta Special</span>
+        </div>
+      </div>
+
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=600&q=80" alt="Edikang Ikong" loading="lazy" />
+          <div class="menu-card-img-overlay"></div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Vegetable Soup (Edikang Ikong) <span class="menu-card-dot"></span></div>
+          <p class="menu-card-desc">Ugwu and water leaves packed with assorted meats, periwinkle, and crayfish. Nutritious and deeply flavored.</p>
+          <span class="menu-card-tag">Green & Rich</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="menu-panel" id="tab-swallow">
+    <div style="text-align:center; margin-bottom:2rem;" class="reveal">
+      <h3 class="section-title" style="font-size:1.8rem;">Perfectly Paired Swallows</h3>
+      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--charcoal-light); font-size:1.1rem; margin-top:0.8rem;">
+        Choose your favorite swallow to enjoy with any of our legendary soups.
+      </p>
+    </div>
+    <div class="swallow-grid reveal">
+      <div class="swallow-card">
+        <div class="swallow-icon">
+          <!-- Bowl / Pounded Yam -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11c0 4.418 3.582 8 8 8s8-3.582 8-8H4z"/><path d="M3 11h18"/><path d="M12 3v2"/><path d="M8 4.5l1 1.5"/><path d="M16 4.5l-1 1.5"/></svg>
+        </div>
+        <div class="swallow-name">Pounded Yam</div>
+      </div>
+      <div class="swallow-card">
+        <div class="swallow-icon">
+          <!-- Grain / Eba -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="13" rx="8" ry="5"/><path d="M4 13c0-2 3.582-5 8-5s8 3 8 5"/><path d="M12 8V5"/><path d="M9 6l3-3 3 3"/></svg>
+        </div>
+        <div class="swallow-name">Eba</div>
+      </div>
+      <div class="swallow-card">
+        <div class="swallow-icon">
+          <!-- Wheat stalk / Semovita -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V10"/><path d="M12 10c0 0-4-2-4-5a4 4 0 018 0c0 3-4 5-4 5z"/><path d="M8.5 14c-1.5.5-3 2-3 4"/><path d="M15.5 14c1.5.5 3 2 3 4"/></svg>
+        </div>
+        <div class="swallow-name">Semovita</div>
+      </div>
+      <div class="swallow-card">
+        <div class="swallow-icon">
+          <!-- Leaf / Wheat swallow -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.99"/><path d="M17 8c1 2.4.5 4.8-1 6.5C14 17 11 18 8 17.5"/><path d="M17 8c2-1 4.5-.5 6 1.5"/></svg>
+        </div>
+        <div class="swallow-name">Wheat</div>
+      </div>
+      <div class="swallow-card">
+        <div class="swallow-icon">
+          <!-- Flame / Amala (dark, earthy) -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c0 4-4 6-4 10a4 4 0 008 0c0-4-4-6-4-10z"/><path d="M12 12c0 2-1.5 3-1.5 4.5a1.5 1.5 0 003 0C13.5 15 12 14 12 12z"/></svg>
+        </div>
+        <div class="swallow-name">Amala</div>
+      </div>
+    </div>
+    <p class="swallow-note reveal">All swallows are freshly prepared to order. Pair any with your choice of legendary soup.</p>
+  </div>
+</section>
+
+<!-- ===== GALLERY SECTION ===== -->
+<section class="gallery-section" id="gallery">
+  <div class="gallery-header reveal">
+    <span class="section-label">Our Kitchen</span>
+    <h2 class="section-title">From Our Kitchen</h2>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=900&q=80" alt="Egusi with swallow" loading="lazy" />
+      <div class="gallery-overlay"><span class="gallery-caption">Egusi Soup with Pounded Yam</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&q=80" alt="Afang soup" loading="lazy" />
+      <div class="gallery-overlay"><span class="gallery-caption">Authentic Afang Soup</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=600&q=80" alt="Ogbono soup" loading="lazy" />
+      <div class="gallery-overlay"><span class="gallery-caption">Traditional Ogbono Soup</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80" alt="Assorted meats" loading="lazy" />
+      <div class="gallery-overlay"><span class="gallery-caption">Assorted Meat Platter</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&q=80" alt="Swallow served" loading="lazy" />
+      <div class="gallery-overlay"><span class="gallery-caption">Freshly Served Swallow</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CHAT SECTION ===== -->
+<section class="order-section" id="contact-cta">
+  <div class="order-inner reveal">
+    <span class="section-label">Get in Touch</span>
+    <h2 class="section-title">Have a Question?<br/>Chat with Us</h2>
+    <p class="order-text">
+      Want to know more about our soups, opening hours, or anything else?<br/>
+      We're just a message away on WhatsApp — we'd love to hear from you.
+    </p>
+    <a href="https://wa.me/2349071143369?text=Hello%20Pdime%20Restaurant%2C%20I%20would%20like%20to%20chat%20with%20you." target="_blank" class="btn-whatsapp">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+      </svg>
+      Chat with Us on WhatsApp
+    </a>
+    <p class="order-note">
+      <svg style="display:inline;vertical-align:middle;margin-right:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      +234 907 114 3369 &nbsp;|&nbsp; We typically reply within minutes
+    </p>
+  </div>
+</section>
+
+<!-- ===== LOCATION SECTION ===== -->
+<section class="location-section" id="contact">
+  <div class="location-info reveal-left">
+    <span class="section-label">Find Us</span>
+    <h2 class="section-title">Visit Pdime<br/><em style="font-style:italic; color:var(--green);">Restaurant</em></h2>
+    <div class="location-details">
+      <div class="location-detail">
+        <div class="location-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="location-detail-text">
+          <h4>Address</h4>
+          <p>Pdime Restaurant, Port Harcourt,<br/>Rivers State, Nigeria</p>
+        </div>
+      </div>
+      <div class="location-detail">
+        <div class="location-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div class="location-detail-text">
+          <h4>Phone / WhatsApp</h4>
+          <p>+234 907 114 3369</p>
+        </div>
+      </div>
+      <div class="location-detail">
+        <div class="location-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="location-detail-text">
+          <h4>Opening Hours</h4>
+          <p>Monday – Saturday: 9:00 AM – 9:00 PM<br/>Sunday: 11:00 AM – 7:00 PM</p>
+        </div>
+      </div>
+      <div class="location-detail">
+        <div class="location-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <div class="location-detail-text">
+          <h4>WhatsApp</h4>
+          <p>Chat with us anytime on WhatsApp.<br/>We're happy to answer your questions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="map-container reveal-right">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15902.819333170473!2d6.9960033!3d4.8206582!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1069d574c8f4466d%3A0xd4976034e14b3362!2sPDIME!5e0!3m2!1sen!2sng!4v1773408801784!5m2!1sen!2sng" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-name">Pdime Restaurant</div>
+      <div class="footer-brand-tag">The Home of Authentic African Soups</div>
+      <p class="footer-brand-desc">
+        Celebrating the rich heritage of African cuisine with authentic soups and perfectly prepared swallows. Every dish is crafted with love and tradition.
+      </p>
+      <div class="footer-tagline">Authentic Swallow. Legendary Soups.</div>
+      <div class="social-links">
+        <a class="social-link" href="#" title="Facebook">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a class="social-link" href="#" title="Instagram">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a class="social-link" href="https://wa.me/2349071143369" target="_blank" title="WhatsApp">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        </a>
+        <a class="social-link" href="#" title="Twitter / X">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul class="footer-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#menu">Our Menu</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Our Soups</h4>
+      <ul class="footer-links">
+        <li><a href="#menu">Egusi Soup</a></li>
+        <li><a href="#menu">Ogbono Soup</a></li>
+        <li><a href="#menu">Okra Soup</a></li>
+        <li><a href="#menu">Afang Soup</a></li>
+        <li><a href="#menu">Bitterleaf Soup</a></li>
+        <li><a href="#menu">Banga Soup</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul class="footer-links">
+        <li><a href="tel:+2349071143369">+234 907 114 3369</a></li>
+        <li><a href="https://wa.me/2349071143369" target="_blank">WhatsApp Us</a></li>
+        <li><a href="#">Port Harcourt, Rivers State</a></li>
+        <li><a href="#">Mon–Sat: 9am–9pm</a></li>
+        <li><a href="#">Sun: 11am–7pm</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2025 Pdime Restaurant. All rights reserved.</span>
+    <div class="footer-bottom-right">
+      Made with <span>♥</span> for lovers of authentic African soups
+    </div>
+  </div>
+</footer>
+
+<!-- ===== STICKY WHATSAPP BTN ===== -->
+<a href="https://wa.me/2349071143369?text=Hello%20Pdime%20Restaurant%2C%20I%20would%20like%20to%20chat%20with%20you." target="_blank" class="sticky-order">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
+  Chat with Us
+</a>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  // Always show nav bg on load
+  navbar.classList.add('scrolled');
+
+  // Mobile nav
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+  function closeMobileNav() {
+    document.getElementById('mobileNav').classList.remove('open');
+  }
+
+  // Menu tab switch
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Stagger children if they are menu cards or swallow cards
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Stagger menu cards
+  document.querySelectorAll('.menu-card').forEach((card, i) => {
+    card.style.transitionDelay = (i % 3) * 0.1 + 's';
+  });
+</script>
+</body>
+</html>
