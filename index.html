@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Pdime Restaurant — The Home of Authentic African Soups</title>
+<title>Pdime Restaurant — Flavor that won't break the bank</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -677,34 +677,42 @@
   .swallow-card {
     background: var(--white);
     border: 2px solid transparent;
-    border-radius: 4px;
-    padding: 1.8rem 2rem;
+    border-radius: 8px;
+    overflow: hidden;
     text-align: center;
     box-shadow: 0 4px 20px rgba(0,0,0,0.06);
     transition: all 0.3s ease;
     cursor: pointer;
-    min-width: 130px;
-    flex: 1 1 130px;
+    flex: 1 1 160px;
     max-width: 200px;
+    min-width: 140px;
   }
   .swallow-card:hover {
     border-color: var(--green);
-    transform: translateY(-4px);
+    transform: translateY(-5px);
     box-shadow: var(--shadow);
   }
-  .swallow-icon {
-    width: 44px; height: 44px;
-    margin: 0 auto 0.9rem;
-    color: var(--green);
+  .swallow-img-wrap {
+    width: 100%;
+    height: 130px;
+    overflow: hidden;
+    position: relative;
   }
-  .swallow-icon svg {
-    width: 100%; height: 100%;
+  .swallow-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .swallow-card:hover .swallow-img-wrap img {
+    transform: scale(1.08);
   }
   .swallow-name {
     font-family: 'Playfair Display', serif;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: var(--charcoal);
+    padding: 0.75rem 0.5rem;
   }
 
   .swallow-note {
@@ -1100,7 +1108,8 @@
     .about-highlights { flex-direction: column; gap: 1.5rem; }
     .footer-bottom { flex-direction: column; text-align: center; }
     .swallow-grid { gap: 0.8rem; }
-    .swallow-card { padding: 1.4rem 1.2rem; min-width: 110px; }
+    .swallow-card { min-width: 120px; flex: 1 1 120px; }
+    .swallow-img-wrap { height: 110px; }
     .order-section { padding: 5rem 5%; }
     .btn-whatsapp { padding: 1rem 1.6rem; font-size: 0.9rem; }
     .section-title { font-size: clamp(1.6rem, 5vw, 2.5rem); }
@@ -1113,7 +1122,147 @@
   @media (max-width: 400px) {
     .about-highlights { flex-direction: row; flex-wrap: wrap; }
     .about-highlight { flex: 1 1 40%; }
-    .swallow-card { min-width: 90px; flex: 1 1 90px; }
+    .swallow-card { min-width: 100px; flex: 1 1 100px; }
+    .swallow-img-wrap { height: 90px; }
+  }
+
+  /* ===== SPECIAL ORDERS SECTION ===== */
+  .specials-section {
+    padding: 6rem 5%;
+    background: var(--charcoal);
+    position: relative;
+    overflow: hidden;
+  }
+  .specials-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1400&q=80') center/cover no-repeat;
+    opacity: 0.07;
+  }
+  .specials-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .specials-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+  .specials-header .section-label { color: var(--gold); }
+  .specials-header .section-label::before { background: var(--gold); display: none; }
+  .specials-header .section-title { color: var(--white); }
+  .specials-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .specials-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.85;
+    max-width: 640px;
+    margin: 0 auto;
+    font-style: italic;
+  }
+  .specials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.4rem;
+    margin-bottom: 2.5rem;
+  }
+  .special-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(212,160,23,0.18);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: all 0.35s ease;
+    cursor: default;
+    min-width: 0;
+  }
+  .special-card:hover {
+    border-color: rgba(212,160,23,0.55);
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+  }
+  .special-card-img {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+  }
+  .special-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.55s ease;
+    filter: brightness(0.88) saturate(1.1);
+  }
+  .special-card:hover .special-card-img img {
+    transform: scale(1.07);
+    filter: brightness(0.95) saturate(1.2);
+  }
+  .special-card-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 55%);
+  }
+  .special-card-body {
+    padding: 1.1rem 1.3rem 1.3rem;
+  }
+  .special-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.35;
+    margin-bottom: 0.35rem;
+  }
+  .special-card-badge {
+    font-size: 0.68rem;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .special-card-badge::before {
+    content: '';
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .specials-divider {
+    width: 60px; height: 1px;
+    background: rgba(212,160,23,0.4);
+    margin: 0 auto 2rem;
+  }
+  .specials-note {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.45);
+    font-style: italic;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+  .specials-note svg { flex-shrink: 0; opacity: 0.6; }
+  .specials-cta {
+    text-align: center;
   }
 
   /* ===== STICKY ORDER BTN ===== */
@@ -1150,13 +1299,14 @@
 <nav id="navbar">
   <a href="#home" class="nav-logo">
     <span class="nav-logo-name">Pdime Restaurant</span>
-    <span class="nav-logo-tag">The Home of Authentic African Soups</span>
+    <span class="nav-logo-tag">Flavor that won't break the bank</span>
   </a>
   <ul class="nav-links">
     <li><a href="#home">Home</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#menu">Menu</a></li>
     <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#specials">Specials</a></li>
     <li><a href="#contact" class="nav-cta">Chat with Us</a></li>
   </ul>
   <div class="hamburger" id="hamburger" onclick="toggleMobileNav()">
@@ -1169,6 +1319,7 @@
   <a href="#about" onclick="closeMobileNav()">About</a>
   <a href="#menu" onclick="closeMobileNav()">Menu</a>
   <a href="#gallery" onclick="closeMobileNav()">Gallery</a>
+  <a href="#specials" onclick="closeMobileNav()">Specials</a>
   <a href="#contact" onclick="closeMobileNav()">Contact</a>
   <a href="https://wa.me/2349071143369?text=Hello%20Pdime%20Restaurant%2C%20I%20would%20like%20to%20chat%20with%20you." onclick="closeMobileNav()" style="color: var(--gold)">Chat with Us on WhatsApp</a>
 </div>
@@ -1181,8 +1332,8 @@
       <div class="hero-badge-dot"></div>
       <span>Now Open for Dine-In</span>
     </div>
-    <h1>Pdime Restaurant —<br/><em>The Home of Authentic</em><br/>African Soups</h1>
-    <p class="hero-sub">Authentic Swallow. Legendary Soups.</p>
+    <h1>Pdime Restaurant —<br/><em>Flavor that won't</em><br/>break the bank</h1>
+    <p class="hero-sub">A dime well spent on every bite</p>
     <div class="hero-btns">
       <a href="#menu" class="btn-primary">View Our Menu</a>
       <a href="https://wa.me/2349071143369?text=Hello%20Pdime%20Restaurant%2C%20I%20would%20like%20to%20chat%20with%20you." class="btn-outline" target="_blank">
@@ -1426,37 +1577,32 @@
     </div>
     <div class="swallow-grid reveal">
       <div class="swallow-card">
-        <div class="swallow-icon">
-          <!-- Bowl / Pounded Yam -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11c0 4.418 3.582 8 8 8s8-3.582 8-8H4z"/><path d="M3 11h18"/><path d="M12 3v2"/><path d="M8 4.5l1 1.5"/><path d="M16 4.5l-1 1.5"/></svg>
+        <div class="swallow-img-wrap">
+          <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=400&q=80" alt="Pounded Yam" loading="lazy" />
         </div>
         <div class="swallow-name">Pounded Yam</div>
       </div>
       <div class="swallow-card">
-        <div class="swallow-icon">
-          <!-- Grain / Eba -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="13" rx="8" ry="5"/><path d="M4 13c0-2 3.582-5 8-5s8 3 8 5"/><path d="M12 8V5"/><path d="M9 6l3-3 3 3"/></svg>
+        <div class="swallow-img-wrap">
+          <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=400&q=80" alt="Eba" loading="lazy" />
         </div>
         <div class="swallow-name">Eba</div>
       </div>
       <div class="swallow-card">
-        <div class="swallow-icon">
-          <!-- Wheat stalk / Semovita -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V10"/><path d="M12 10c0 0-4-2-4-5a4 4 0 018 0c0 3-4 5-4 5z"/><path d="M8.5 14c-1.5.5-3 2-3 4"/><path d="M15.5 14c1.5.5 3 2 3 4"/></svg>
+        <div class="swallow-img-wrap">
+          <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=400&q=80" alt="Semovita" loading="lazy" />
         </div>
         <div class="swallow-name">Semovita</div>
       </div>
       <div class="swallow-card">
-        <div class="swallow-icon">
-          <!-- Leaf / Wheat swallow -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.99"/><path d="M17 8c1 2.4.5 4.8-1 6.5C14 17 11 18 8 17.5"/><path d="M17 8c2-1 4.5-.5 6 1.5"/></svg>
+        <div class="swallow-img-wrap">
+          <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=400&q=80" alt="Wheat" loading="lazy" />
         </div>
         <div class="swallow-name">Wheat</div>
       </div>
       <div class="swallow-card">
-        <div class="swallow-icon">
-          <!-- Flame / Amala (dark, earthy) -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c0 4-4 6-4 10a4 4 0 008 0c0-4-4-6-4-10z"/><path d="M12 12c0 2-1.5 3-1.5 4.5a1.5 1.5 0 003 0C13.5 15 12 14 12 12z"/></svg>
+        <div class="swallow-img-wrap">
+          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&q=80" alt="Amala" loading="lazy" />
         </div>
         <div class="swallow-name">Amala</div>
       </div>
@@ -1492,6 +1638,128 @@
       <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&q=80" alt="Swallow served" loading="lazy" />
       <div class="gallery-overlay"><span class="gallery-caption">Freshly Served Swallow</span></div>
     </div>
+  </div>
+</section>
+
+<!-- ===== SPECIAL ORDERS SECTION ===== -->
+<section class="specials-section" id="specials">
+  <div class="specials-inner">
+
+    <div class="specials-header reveal">
+      <span class="section-label">Exclusive</span>
+      <span class="specials-subtitle">Prepared Fresh on Request</span>
+      <h2 class="section-title">Special Orders</h2>
+      <p class="specials-desc">Some of our dishes are prepared specially to ensure the best flavor and freshness. These meals require advance ordering and are perfect for special cravings, gatherings, or sharing.</p>
+    </div>
+
+    <div class="specials-grid reveal">
+
+      <div class="special-card">
+        <div class="special-card-img">
+          <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=600&q=80" alt="Goat Meat Pepper Soup" loading="lazy" />
+          <div class="special-card-img-overlay"></div>
+        </div>
+        <div class="special-card-body">
+          <div class="special-card-name">Goat Meat Pepper Soup</div>
+          <div class="special-card-badge">Advance Order</div>
+        </div>
+      </div>
+
+      <div class="special-card">
+        <div class="special-card-img">
+          <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&q=80" alt="Catfish Pepper Soup" loading="lazy" />
+          <div class="special-card-img-overlay"></div>
+        </div>
+        <div class="special-card-body">
+          <div class="special-card-name">Catfish Pepper Soup</div>
+          <div class="special-card-badge">Advance Order</div>
+        </div>
+      </div>
+
+      <div class="special-card">
+        <div class="special-card-img">
+          <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80" alt="Assorted Meat Pepper Soup" loading="lazy" />
+          <div class="special-card-img-overlay"></div>
+        </div>
+        <div class="special-card-body">
+          <div class="special-card-name">Assorted Meat Pepper Soup</div>
+          <div class="special-card-badge">Advance Order</div>
+        </div>
+      </div>
+
+      <div class="special-card">
+        <div class="special-card-img">
+          <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=600&q=80" alt="Isi Ewu" loading="lazy" />
+          <div class="special-card-img-overlay"></div>
+        </div>
+        <div class="special-card-body">
+          <div class="special-card-name">Isi Ewu</div>
+          <div class="special-card-badge">Advance Order</div>
+        </div>
+      </div>
+
+      <div class="special-card">
+        <div class="special-card-img">
+          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&q=80" alt="Nkwobi" loading="lazy" />
+          <div class="special-card-img-overlay"></div>
+        </div>
+        <div class="special-card-body">
+          <div class="special-card-name">Nkwobi</div>
+          <div class="special-card-badge">Advance Order</div>
+        </div>
+      </div>
+
+      <div class="special-card">
+        <div class="special-card-img">
+          <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=80" alt="Grilled Fish with Pepper Sauce" loading="lazy" />
+          <div class="special-card-img-overlay"></div>
+        </div>
+        <div class="special-card-body">
+          <div class="special-card-name">Grilled Fish with Pepper Sauce</div>
+          <div class="special-card-badge">Advance Order</div>
+        </div>
+      </div>
+
+      <div class="special-card">
+        <div class="special-card-img">
+          <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&q=80" alt="Full Assorted Meat Platter" loading="lazy" />
+          <div class="special-card-img-overlay"></div>
+        </div>
+        <div class="special-card-body">
+          <div class="special-card-name">Full Assorted Meat Platter</div>
+          <div class="special-card-badge">Advance Order</div>
+        </div>
+      </div>
+
+      <div class="special-card">
+        <div class="special-card-img">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Party Soup Pots" loading="lazy" />
+          <div class="special-card-img-overlay"></div>
+        </div>
+        <div class="special-card-body">
+          <div class="special-card-name">Party Soup Pots — Large Portions</div>
+          <div class="special-card-badge">Egusi · Afang · Ogbono</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="specials-divider"></div>
+
+    <p class="specials-note reveal">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Special order dishes may require advance notice. Please place your order through WhatsApp.
+    </p>
+
+    <div class="specials-cta reveal">
+      <a href="https://wa.me/2349071143369?text=Hello%20Pdime%20Restaurant%2C%20I%20would%20like%20to%20order%20a%20special%20dish." target="_blank" class="btn-whatsapp">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        Order Special Dishes on WhatsApp
+      </a>
+    </div>
+
   </div>
 </section>
 
@@ -1547,7 +1815,7 @@
         </div>
         <div class="location-detail-text">
           <h4>Opening Hours</h4>
-          <p>Monday – Saturday: 9:00 AM – 9:00 PM<br/>Sunday: 11:00 AM – 7:00 PM</p>
+          <p>Monday – Saturday: 9:00 AM – 9:00 PM</p>
         </div>
       </div>
       <div class="location-detail">
@@ -1571,23 +1839,17 @@
   <div class="footer-top">
     <div class="footer-brand">
       <div class="footer-brand-name">Pdime Restaurant</div>
-      <div class="footer-brand-tag">The Home of Authentic African Soups</div>
+      <div class="footer-brand-tag">Flavor that won't break the bank</div>
       <p class="footer-brand-desc">
         Celebrating the rich heritage of African cuisine with authentic soups and perfectly prepared swallows. Every dish is crafted with love and tradition.
       </p>
-      <div class="footer-tagline">Authentic Swallow. Legendary Soups.</div>
+      <div class="footer-tagline">A dime well spent on every bite</div>
       <div class="social-links">
-        <a class="social-link" href="#" title="Facebook">
+        <a class="social-link" href="https://www.facebook.com/share/1Anypxm7tA/?mibextid=wwXIfr" target="_blank" title="Facebook">
           <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         </a>
-        <a class="social-link" href="#" title="Instagram">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        </a>
-        <a class="social-link" href="https://wa.me/2349071143369" target="_blank" title="WhatsApp">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-        </a>
-        <a class="social-link" href="#" title="Twitter / X">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <a class="social-link" href="https://www.tiktok.com/@pdime5?_r=1&_t=ZS-94f8H0oNQrl" target="_blank" title="TikTok">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.54V6.78a4.85 4.85 0 01-1.02-.09z"/></svg>
         </a>
       </div>
     </div>
@@ -1598,6 +1860,7 @@
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About Us</a></li>
         <li><a href="#menu">Our Menu</a></li>
+        <li><a href="#specials">Special Orders</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -1622,7 +1885,6 @@
         <li><a href="https://wa.me/2349071143369" target="_blank">WhatsApp Us</a></li>
         <li><a href="#">Port Harcourt, Rivers State</a></li>
         <li><a href="#">Mon–Sat: 9am–9pm</a></li>
-        <li><a href="#">Sun: 11am–7pm</a></li>
       </ul>
     </div>
   </div>
